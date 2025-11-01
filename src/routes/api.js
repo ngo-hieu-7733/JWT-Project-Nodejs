@@ -13,7 +13,7 @@ const routerAPI = express.Router();
 // routerAPI.delete('/users', deleteUserAPI);
 
 routerAPI.get('/', (req, res) => {
-	return res.status(200).json('hello world api');
+	return res.status(200).json('hello world thang cho');
 });
 
 module.exports = routerAPI; //export default
