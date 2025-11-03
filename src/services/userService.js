@@ -5,6 +5,12 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const createUserService = async (name, email, password) => {
 	try {
+		// check email is existed
+		const isExistedEmail = await User.findOne({ email });
+		if (isExistedEmail) {
+			console.log('Email is existed!!!');
+			return null;
+		}
 		// hash user's password
 		const hashPassword = await bcrypt.hash(password, saltRounds);
 
@@ -39,6 +45,7 @@ const loginService = async (email, password) => {
 					expiresIn: process.env.JWT_EXP,
 				});
 				return {
+					code: 201,
 					token: accessToken,
 					user: {
 						email: user.email,
@@ -47,12 +54,12 @@ const loginService = async (email, password) => {
 				};
 			}
 			return {
-				code: 2,
+				code: 401,
 				message: 'email / password khong hop le',
 			};
 		} else {
 			return {
-				code: 1,
+				code: 401,
 				message: 'email / password khong hop le',
 			};
 		}
@@ -62,7 +69,19 @@ const loginService = async (email, password) => {
 	}
 };
 
+const getUsersService = async () => {
+	try {
+		// hash user's password
+		const result = await User.find({});
+		return result;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+};
+
 module.exports = {
 	createUserService,
 	loginService,
+	getUsersService,
 };

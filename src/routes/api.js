@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, handleLogin } = require('../controllers/userController');
+const { createUser, handleLogin, getUsers } = require('../controllers/userController');
 
 const routerAPI = express.Router();
 
@@ -17,7 +17,9 @@ routerAPI.get('/', (req, res) => {
 	return res.status(200).json('hello world thang cho');
 });
 
-routerAPI.post('/register', createUser);
+routerAPI.get('/users', getUsers);
+
 routerAPI.post('/login', handleLogin);
+routerAPI.post('/register', createUser);
 
 module.exports = routerAPI; //export default
