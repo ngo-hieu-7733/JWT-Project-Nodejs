@@ -72,7 +72,7 @@ const loginService = async (email, password) => {
 const getUsersService = async () => {
 	try {
 		// hash user's password
-		const result = await User.find({});
+		const result = await User.find({}).select('-password');
 		return result;
 	} catch (error) {
 		console.log(error);
